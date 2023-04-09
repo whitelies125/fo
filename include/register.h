@@ -1,13 +1,12 @@
 #ifndef REGISTER_H
 #define REGISTER_H
 
-#include <string>
-#include <unordered_map>
+#include <map>
 
 #include "implement.h"
 
-using func_ptr = bool (*)();
+using Func= void (*)(Paras& paras);
 
-extern std::unordered_map<std::string, func_ptr> g_cmd_register;
+extern std::map<std::string, Func> g_cmd;
 
 #endif

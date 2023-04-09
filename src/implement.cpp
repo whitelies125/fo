@@ -1,46 +1,60 @@
 #include "implement.h"
 
 #include <iostream>
+#include <cstdlib>
+#include <numeric>
 
 #include "register.h"
 
 // local folder
-bool implement_code(){
+void implement_code(Paras& paras) {
     system("explorer e:\\code");
-    return true;
 }
-bool implement_markdown(){
+void implement_markdown(Paras& paras) {
     system("explorer e:\\my_markdown");
-    return true;
 }
-bool implement_downloads(){
+void implement_downloads(Paras& paras) {
     system("explorer e:\\downloads");
-    return true;
 }
-bool implement_ygopro(){
+void implement_ygopro(Paras& paras) {
     system("explorer e:\\ygopro");
-    return true;
 }
 
 // online website
-bool implement_zhihu(){
-    system("chrome https://www.zhihu.com/");
-    return true;
+static void implement_online_website(const std::string& defalt, std::string& prefix,
+                              Paras& paras) {
+    if (paras.size() <= 1) {
+        system(defalt.c_str());
+        return;
+    }
+
+    std::string cmd = std::accumulate(std::next(paras.begin()), paras.end(), prefix,
+        [](std::string prefix, std::string it) {
+            return std::move(prefix) + it + " ";
+        });
+    *cmd.rbegin() = '\"';
+    system(cmd.c_str());
 }
-bool implement_bilibili(){
-    system("chrome https://www.bilibili.com/");
-    return true;
+void implement_google(Paras& paras) {
+    std::string defalt {"chrome https://www.google.com/"};
+    std::string prefix {"chrome \"https://www.google.com/search?q="};
+    implement_online_website(defalt, prefix, paras);
+}
+void implement_zhihu(Paras &paras) {
+    std::string defalt {"chrome https://www.zhihu.com/"};
+    std::string prefix {"chrome \"https://www.zhihu.com/search?type=content&q="};
+    implement_online_website(defalt, prefix, paras);
+}
+void implement_bilibili(Paras& paras) {
+    std::string defalt {"chrome https://www.bilibili.com/"};
+    std::string prefix {"chrome \"https://search.bilibili.com/all?keyword="};
+    implement_online_website(defalt, prefix, paras);
 }
 
-// control
-bool implement_quit(){
-    return true;
-}
-
-bool implement_list(){
+// help
+void implement_list(Paras& paras) {
     std::cout << "all command:" << std::endl;
-    for (const auto &[key, func] : g_cmd_register) {
+    for (const auto& [key, func] : g_cmd) {
         std::cout << key << std::endl;
     }
-    return false;
 }

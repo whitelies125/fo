@@ -1,32 +1,29 @@
 #include <iostream>
-#include <string>
-#include <cstdlib>
 
 #include "register.h"
 
-static bool find_and_execute_cmd(const std::string& input){
-    if(input.empty()) return false;
-    for(const auto& [cmd, func] : g_cmd_register){
-        if(cmd.starts_with(input)){
-            return func();
+static bool execute_cmd(Paras paras) {
+    if (paras.empty()) return false;
+    for (const auto& [cmd, func] : g_cmd) {
+        if (cmd.starts_with(paras[0])) {
+            func(paras);
+            return true;
         }
     }
     return false;
 }
 
 int main(int argc, char* argv[]){
-    // currently, I only implement argc == 2 case;
-    std::string input {""};
-    bool res {false};
-    if(argc == 2){
-        input = argv[1];
-        res = find_and_execute_cmd(input);
+    if (argc == 1) {
+        std::cout << "no arguments." << std::endl;
+        return 0;
     }
-    while(!res){
-        std::cout <<  "input again(\"list\" for all cmd): ";
-        getline(std::cin, input);
-        res = find_and_execute_cmd(input);
-        std::cout << std::endl;
+    Paras paras;
+    for (int i {1}; i < argc; ++i) {
+        paras.push_back(argv[i]);
+    }
+    if (!execute_cmd(paras)) {
+        std::cout << "no matched, input \"list\" to show all command." << std::endl;
     }
     return 0;
 }

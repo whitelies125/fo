@@ -1,6 +1,6 @@
 #include "register.h"
 
-std::unordered_map<std::string, func_ptr> g_cmd_register{
+std::map<std::string, Func> g_cmd {
     // local folder
     {"code", implement_code},
     {"markdown", implement_markdown},
@@ -8,10 +8,10 @@ std::unordered_map<std::string, func_ptr> g_cmd_register{
     {"ygopro", implement_ygopro},
 
     // online website
+    {"google", implement_google},
     {"zhihu", implement_zhihu},
     {"bilibili", implement_bilibili},
 
-    // control
-    {"quit", implement_quit},
+    // help
     {"list", implement_list},
 };

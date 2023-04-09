@@ -2,19 +2,23 @@
 #define IMPLEMENT_H
 
 #include <string>
+#include <vector>
+
+using Paras = std::vector<std::string>;
 
 // local folder
-bool implement_code();
-bool implement_markdown();
-bool implement_downloads();
-bool implement_ygopro();
+void implement_code(Paras& paras);
+void implement_markdown(Paras& paras);
+void implement_downloads(Paras& paras);
+void implement_ygopro(Paras& paras);
 
 // online website
-bool implement_zhihu();
-bool implement_bilibili();
+void implement_google(Paras& paras);
+void implement_zhihu(Paras& paras);
+void implement_bilibili(Paras& paras);
 
 // control
-bool implement_quit();
-bool implement_list();
+void implement_quit(Paras& paras);
+void implement_list(Paras& paras);
 
 #endif
