@@ -1,24 +1,34 @@
-# 添加 Makefile 搜索文件时的搜索目录，冒号分隔，搜索时的搜索目录顺序从前往后
-VPATH = include : src
-# 指定 .h 文件仅在 include 目录下搜索
-vpath %.h include
-# 指定 .cpp 文件在 src 目录下搜索
-vpath %.cpp src
+CXX := g++
 
-objects = main.o register.o implement.o
+TARGET := go.exe
 
-go.exe: $(objects)
-	g++ -std=c++20 -o build/go $(objects)
-main.o: main.cpp register.h
-	g++ -std=c++20 -c src/main.cpp -I include
-register.o: register.cpp register.h
-	g++ -std=c++20 -c src/register.cpp -I include
-implement.o: implement.cpp implement.h
-	g++ -std=c++20 -c src/implement.cpp -I include
+BUILD_DIR := ./build
+SRC_DIR := ./src
+INC_DIR := ./include
 
-.PHONY: clean cleanObj cleanExe
-clean: cleanObj cleanExe
-cleanObj:
-	-del *.o
-cleanExe:
-	-del build\\*.exe
+SRC_CXX := $(wildcard $(SRC_DIR)/*.cpp)
+OBJ_CXX := $(patsubst $(SRC_DIR)/%.cpp, $(BUILD_DIR)/%.o,$(SRC_CXX))
+# 可简写为
+# OBJ_CXX := $(SRC_CXX:$(SRC_DIR)%.cpp=$(BUILD_DIR)/%.o)
+
+INC_FLAGS := $(addprefix -I ,$(INC_DIR))
+CXX_FLAGS := -g -std=c++20 -Wall $(INC_FLAGS)
+
+$(BUILD_DIR)/$(TARGET) : $(OBJ_CXX)
+	$(CXX) -o $@ $^
+# Pattern Rules
+$(BUILD_DIR)/%.o : $(SRC_DIR)/%.cpp
+	$(CXX) -o $@ -c $< $(CXX_FLAGS)
+# 个人理解是
+# 1. $(BUILD_DIR)/$(TARGET) : $(OBJ_CXX) 执行时先发现依赖 ./build/implement.o
+# 2. 寻找合适的 rule，这里找到 $(BUILD_DIR)/%.o : $(SRC_DIR)/%.cpp
+# 3. $(BUILD_DIR)/%.o 匹配得出 % = implement
+# 4. 且得出的 $(SRC_DIR)/%.cpp = ./src/implemet.cpp 是一个存在的文件
+# 5. 如果只删除 $(BUILD_DIR)/ 改成 %.o，% = ./build/implement.o，就不对了
+# 6. 因为这样的话，依赖的 $(SRC_DIR)/%.cpp 就是一个不存在的文件了
+
+.PHONY: clean
+RM := del
+clean:
+	$(RM) build\\*.o
+	$(RM) build\\*.exe
