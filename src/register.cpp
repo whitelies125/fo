@@ -1,6 +1,6 @@
 #include "register.h"
 
-std::map<std::string, Func> g_cmd {
+const std::map<const std::string, Func> g_cmd {
     // local folder
     {"code", implement_code},
     {"markdown", implement_markdown},

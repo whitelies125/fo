@@ -7,18 +7,18 @@
 using Paras = std::vector<std::string>;
 
 // local folder
-void implement_code(Paras& paras);
-void implement_markdown(Paras& paras);
-void implement_downloads(Paras& paras);
-void implement_ygopro(Paras& paras);
+void implement_code(const Paras& paras);
+void implement_markdown(const Paras& paras);
+void implement_downloads(const Paras& paras);
+void implement_ygopro(const Paras& paras);
 
 // online website
-void implement_google(Paras& paras);
-void implement_zhihu(Paras& paras);
-void implement_bilibili(Paras& paras);
+void implement_google(const Paras& paras);
+void implement_zhihu(const Paras& paras);
+void implement_bilibili(const Paras& paras);
 
 // control
-void implement_quit(Paras& paras);
-void implement_list(Paras& paras);
+void implement_quit(const Paras& paras);
+void implement_list(const Paras& paras);
 
 #endif

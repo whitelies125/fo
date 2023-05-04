@@ -1,6 +1,6 @@
 CXX := g++
 
-TARGET := go.exe
+TARGET := fo
 
 BUILD_DIR := ./build
 SRC_DIR := ./src

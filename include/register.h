@@ -5,8 +5,8 @@
 
 #include "implement.h"
 
-using Func= void (*)(Paras& paras);
+using Func= void (*)(const Paras& paras);
 
-extern std::map<std::string, Func> g_cmd;
+extern const std::map<const std::string, Func> g_cmd;
 
 #endif

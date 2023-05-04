@@ -7,22 +7,23 @@
 #include "register.h"
 
 // local folder
-void implement_code(Paras& paras) {
+void implement_code(const Paras& paras) {
     system("explorer e:\\code");
 }
-void implement_markdown(Paras& paras) {
+void implement_markdown(const Paras& paras) {
     system("explorer e:\\my_markdown");
 }
-void implement_downloads(Paras& paras) {
+void implement_downloads(const Paras& paras) {
     system("explorer e:\\downloads");
 }
-void implement_ygopro(Paras& paras) {
+void implement_ygopro(const Paras& paras) {
     system("explorer e:\\ygopro");
 }
 
 // online website
-static void implement_online_website(const std::string& defalt, std::string& prefix,
-                              Paras& paras) {
+static void implement_online_website(const std::string& defalt,
+                                     const std::string& prefix,
+                                     const Paras& paras) {
     if (paras.size() <= 1) {
         system(defalt.c_str());
         return;
@@ -35,24 +36,24 @@ static void implement_online_website(const std::string& defalt, std::string& pre
     *cmd.rbegin() = '\"';
     system(cmd.c_str());
 }
-void implement_google(Paras& paras) {
+void implement_google(const Paras& paras) {
     std::string defalt {"chrome https://www.google.com/"};
     std::string prefix {"chrome \"https://www.google.com/search?q="};
     implement_online_website(defalt, prefix, paras);
 }
-void implement_zhihu(Paras &paras) {
+void implement_zhihu(const Paras &paras) {
     std::string defalt {"chrome https://www.zhihu.com/"};
     std::string prefix {"chrome \"https://www.zhihu.com/search?type=content&q="};
     implement_online_website(defalt, prefix, paras);
 }
-void implement_bilibili(Paras& paras) {
+void implement_bilibili(const Paras& paras) {
     std::string defalt {"chrome https://www.bilibili.com/"};
     std::string prefix {"chrome \"https://search.bilibili.com/all?keyword="};
     implement_online_website(defalt, prefix, paras);
 }
 
 // help
-void implement_list(Paras& paras) {
+void implement_list(const Paras& paras) {
     std::cout << "all command:" << std::endl;
     for (const auto& [key, func] : g_cmd) {
         std::cout << key << std::endl;
