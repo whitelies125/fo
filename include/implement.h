@@ -16,6 +16,7 @@ void implement_ygopro(const Paras& paras);
 void implement_google(const Paras& paras);
 void implement_zhihu(const Paras& paras);
 void implement_bilibili(const Paras& paras);
+void implement_github(const Paras& paras);
 
 // control
 void implement_quit(const Paras& paras);
