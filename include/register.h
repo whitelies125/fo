@@ -5,7 +5,7 @@
 
 #include "implement.h"
 
-using Func= void (*)(const Paras& paras);
+using Func = void (*)(const Paras& paras);
 
 struct Item {
     std::string match_name;
@@ -13,7 +13,7 @@ struct Item {
     std::string windows_name;
 };
 
-const Item g_item [] = {
+const Item g_item[] = {
     // local folder
     {"code", implement_code, "Code"},
     {"markdown", implement_markdown, "my_markdown"},
