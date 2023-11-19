@@ -5,7 +5,7 @@
 
 #include "implement.h"
 
-using Func = void (*)(const Paras& paras);
+using Func = void (*)(const int index, const Paras& paras);
 
 struct Item {
     std::string match_name;
@@ -15,10 +15,9 @@ struct Item {
 
 const Item g_item[] = {
     // local folder
+    {"root", implement_root, "root"},
     {"code", implement_code, "Code"},
-    {"markdown", implement_markdown, "my_markdown"},
-    {"downloads", implement_downloads, "Downloads"},
-    {"ygopro", implement_ygopro, "YGOPro"},
+    {"downloads", implement_downloads, "下载"},
 
     // online website
     {"google", implement_google, ""},

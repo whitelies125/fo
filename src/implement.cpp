@@ -1,56 +1,96 @@
 #include "implement.h"
 
+#include <Windows.h>
+
+#include <codecvt>
 #include <cstdlib>
 #include <iostream>
+#include <locale>
 #include <numeric>
 
 #include "register.h"
 
+static void execute_cmd(const std::string& cmd)
+{
+    std::cout << cmd << std::endl;
+    system(cmd.c_str());
+}
+
+static bool setWindosOnTop(const std::string& windows_name)
+{
+    if (windows_name == "") return false;
+    // string 转换为 LPCWSTR
+    std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
+    std::wstring wstr = converter.from_bytes(windows_name);
+    LPCWSTR lpcwstr = wstr.c_str();
+
+    HWND hWnd = FindWindowW(NULL, lpcwstr);
+    if (hWnd != NULL) {
+        SetForegroundWindow(hWnd);
+        return true;
+    }
+    return false;
+}
+
+static void set_top_or_open_directory(const std::string str, const std::string windows_name = "")
+{
+    if (!setWindosOnTop(windows_name)) {
+        execute_cmd("explorer " + str);
+    }
+}
+
 // local folder
-void implement_code(const Paras& paras) { system("explorer e:\\code"); }
-void implement_markdown(const Paras& paras) { system("explorer e:\\my_markdown"); }
-void implement_downloads(const Paras& paras) { system("explorer e:\\downloads"); }
-void implement_ygopro(const Paras& paras) { system("explorer e:\\ygopro"); }
+void implement_root(const int index, const Paras& paras)
+{
+    set_top_or_open_directory("C:\\Users\\whitelies125\\root", g_item[index].windows_name);
+}
+void implement_code(const int index, const Paras& paras)
+{
+    set_top_or_open_directory("C:\\Users\\whitelies125\\root\\program\\Code",
+                              g_item[index].windows_name);
+}
+void implement_downloads(const int index, const Paras& paras)
+{
+    set_top_or_open_directory("C:\\Users\\whitelies125\\Downloads", g_item[index].windows_name);
+}
 
 // online website
 static void implement_online_website(const Paras& paras, const std::string& defalt,
                                      const std::string& prefix, const std::string& suffix = "\"")
 {
-    std::string cmd {""};
-    std::string browser {"chrome"};
-    if (paras.size() <= 1) {
-        cmd = browser + " " + defalt;
-        system(cmd.c_str());
-        return;
+    std::string cmd {};
+    std::string browser {"start chrome "};
+    if (paras.empty()) {
+        cmd = browser + defalt;
+    } else {
+        std::string str = std::accumulate(
+            paras.begin(), paras.end(), prefix,
+            [](std::string prefix, std::string it) { return std::move(prefix) + it + " "; });
+        str.pop_back();
+        cmd = browser + str + suffix;
     }
-
-    cmd = browser + " " +
-          std::accumulate(
-              std::next(paras.begin()), paras.end(), prefix,
-              [](std::string prefix, std::string it) { return std::move(prefix) + it + " "; });
-    cmd += suffix;
-    system(cmd.c_str());
+    execute_cmd(cmd);
 }
-void implement_google(const Paras& paras)
+void implement_google(const int index, const Paras& paras)
 {
     std::string defalt {"https://www.google.com/"};
     std::string prefix {"\"https://www.google.com/search?q="};
     implement_online_website(paras, defalt, prefix);
 }
-void implement_zhihu(const Paras& paras)
+void implement_zhihu(const int index, const Paras& paras)
 {
     std::string defalt {"https://www.zhihu.com/"};
     std::string prefix {"\"https://www.zhihu.com/search?type=content&q="};
     implement_online_website(paras, defalt, prefix);
 }
-void implement_bilibili(const Paras& paras)
+void implement_bilibili(const int index, const Paras& paras)
 {
     std::string defalt {"https://www.bilibili.com/"};
     std::string prefix {"\"https://search.bilibili.com/all?keyword="};
     implement_online_website(paras, defalt, prefix);
 }
 
-void implement_github(const Paras& paras)
+void implement_github(const int index, const Paras& paras)
 {
     std::string defalt {"https://github.com/whitelies125"};
     std::string prefix {"\"https://github.com/search?q="};
@@ -59,7 +99,7 @@ void implement_github(const Paras& paras)
 }
 
 // help
-void implement_list(const Paras& paras)
+void implement_list(const int index, const Paras& paras)
 {
     std::cout << "all command:" << std::endl;
     for (const auto& [match_name, callback, windows_name] : g_item) {
