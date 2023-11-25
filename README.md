@@ -1,4 +1,5 @@
+fo = fast open
 
-Windows 上自己常用 cmd 命令的简写。
+Windows 上通过 cmd 快速打开自己常开目录、网页。
 
-最开始起名用的 go，but 为了防止冲突，改成了 fo，大概取 fast open 之意？
+实质上也就是将 fo {short_cmd} 映射为了 start {long_cmd}
