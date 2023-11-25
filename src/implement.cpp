@@ -98,6 +98,11 @@ void implement_github(const int index, const Paras& paras)
     implement_online_website(paras, defalt, prefix, suffix);
 }
 
+void implement_leetcode(const int index, const Paras& paras)
+{
+    execute_cmd("start chrome https://leetcode.cn/");
+}
+
 // help
 void implement_list(const int index, const Paras& paras)
 {

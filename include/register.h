@@ -24,6 +24,7 @@ const Item g_item[] = {
     {"zhihu", implement_zhihu, ""},
     {"bilibili", implement_bilibili, ""},
     {"github", implement_github, ""},
+    {"leetcode", implement_leetcode, ""},
 
     // help
     {"list", implement_list, ""},
