@@ -8,13 +8,13 @@ int main(int argc, char *argv[])
         std::cout << "no arguments. input \"list\" to show all command." << std::endl;
         return 1;
     }
+    Paras paras;
+    for (int i {2}; i < argc; ++i) paras.push_back(argv[i]);
     bool matched {false};
-    for (int index = 0; index < sizeof(g_item) / sizeof(g_item[0]); ++index) {
-        if (g_item[index].match_name.starts_with(argv[1])) {
+    for (const auto& item : g_item) {
+        if (item.match_name.starts_with(argv[1])) {
             matched = true;
-            Paras paras;
-            for (int i {2}; i < argc; ++i) paras.push_back(argv[i]);
-            g_item[index].callback(index, paras);
+            item.callback(item, paras);
             return 0;
         }
     }

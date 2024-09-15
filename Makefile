@@ -12,7 +12,7 @@ OBJ_CXX := $(patsubst $(SRC_DIR)/%.cpp, $(BUILD_DIR)/%.o,$(SRC_CXX))
 # OBJ_CXX := $(SRC_CXX:$(SRC_DIR)%.cpp=$(BUILD_DIR)/%.o)
 
 INC_FLAGS := $(addprefix -I ,$(INC_DIR))
-CXX_FLAGS := -g -std=c++20 -Wall $(INC_FLAGS)
+CXX_FLAGS := -std=c++20 -Wall $(INC_FLAGS)
 
 $(BUILD_DIR)/$(TARGET) : $(OBJ_CXX)
 	$(CXX) -o $@ $^

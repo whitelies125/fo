@@ -5,20 +5,28 @@
 #include <vector>
 
 using Paras = std::vector<std::string>;
+struct Item;
+using Func = void (*)(const Item &item, const Paras& paras);
+struct Item {
+    std::string match_name;
+    Func callback;
+    std::string windows_name;
+};
+
 
 // local folder
-void implement_root(const int index, const Paras& paras);
-void implement_code(const int index, const Paras& paras);
-void implement_downloads(const int index, const Paras& paras);
+void implement_root(const Item &item, const Paras& paras);
+void implement_code(const Item &item, const Paras& paras);
+void implement_downloads(const Item &item, const Paras& paras);
 
 // online website
-void implement_google(const int index, const Paras& paras);
-void implement_zhihu(const int index, const Paras& paras);
-void implement_bilibili(const int index, const Paras& paras);
-void implement_github(const int index, const Paras& paras);
-void implement_leetcode(const int index, const Paras& paras);
+void implement_google(const Item &item, const Paras& paras);
+void implement_zhihu(const Item &item, const Paras& paras);
+void implement_bilibili(const Item &item, const Paras& paras);
+void implement_github(const Item &item, const Paras& paras);
+void implement_leetcode(const Item &item, const Paras& paras);
 
 // control
-void implement_list(const int index, const Paras& paras);
+void implement_list(const Item &item, const Paras& paras);
 
 #endif

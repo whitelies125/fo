@@ -1,17 +1,7 @@
 #ifndef REGISTER_H
 #define REGISTER_H
 
-#include <map>
-
 #include "implement.h"
-
-using Func = void (*)(const int index, const Paras& paras);
-
-struct Item {
-    std::string match_name;
-    Func callback;
-    std::string windows_name;
-};
 
 const Item g_item[] = {
     // local folder

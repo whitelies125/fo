@@ -40,18 +40,18 @@ static void set_top_or_open_directory(const std::string str, const std::string w
 }
 
 // local folder
-void implement_root(const int index, const Paras& paras)
+void implement_root(const Item &item, const Paras& paras)
 {
-    set_top_or_open_directory("C:\\Users\\whitelies125\\root", g_item[index].windows_name);
+    set_top_or_open_directory("C:\\Users\\whitelies125\\root", item.windows_name);
 }
-void implement_code(const int index, const Paras& paras)
+void implement_code(const Item &item, const Paras& paras)
 {
     set_top_or_open_directory("C:\\Users\\whitelies125\\root\\program\\Code",
-                              g_item[index].windows_name);
+                              item.windows_name);
 }
-void implement_downloads(const int index, const Paras& paras)
+void implement_downloads(const Item &item, const Paras& paras)
 {
-    set_top_or_open_directory("C:\\Users\\whitelies125\\Downloads", g_item[index].windows_name);
+    set_top_or_open_directory("C:\\Users\\whitelies125\\Downloads", item.windows_name);
 }
 
 // online website
@@ -71,26 +71,26 @@ static void implement_online_website(const Paras& paras, const std::string& defa
     }
     execute_cmd(cmd);
 }
-void implement_google(const int index, const Paras& paras)
+void implement_google(const Item &item, const Paras& paras)
 {
     std::string defalt {"https://www.google.com/"};
     std::string prefix {"\"https://www.google.com/search?q="};
     implement_online_website(paras, defalt, prefix);
 }
-void implement_zhihu(const int index, const Paras& paras)
+void implement_zhihu(const Item &item, const Paras& paras)
 {
     std::string defalt {"https://www.zhihu.com/"};
     std::string prefix {"\"https://www.zhihu.com/search?type=content&q="};
     implement_online_website(paras, defalt, prefix);
 }
-void implement_bilibili(const int index, const Paras& paras)
+void implement_bilibili(const Item &item, const Paras& paras)
 {
     std::string defalt {"https://www.bilibili.com/"};
     std::string prefix {"\"https://search.bilibili.com/all?keyword="};
     implement_online_website(paras, defalt, prefix);
 }
 
-void implement_github(const int index, const Paras& paras)
+void implement_github(const Item &item, const Paras& paras)
 {
     std::string defalt {"https://github.com/whitelies125"};
     std::string prefix {"\"https://github.com/search?q="};
@@ -98,16 +98,17 @@ void implement_github(const int index, const Paras& paras)
     implement_online_website(paras, defalt, prefix, suffix);
 }
 
-void implement_leetcode(const int index, const Paras& paras)
+void implement_leetcode(const Item &item, const Paras& paras)
 {
     execute_cmd("start chrome https://leetcode.cn/");
 }
 
 // help
-void implement_list(const int index, const Paras& paras)
+void implement_list(const Item &item, const Paras& paras)
 {
     std::cout << "all command:" << std::endl;
     for (const auto& [match_name, callback, windows_name] : g_item) {
         std::cout << match_name << std::endl;
     }
+    system("pause");
 }
