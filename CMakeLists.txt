@@ -5,7 +5,7 @@ project( "Fo" )
 cmake_minimum_required( VERSION 3.2 )
 
 # 3,设定编译参数
-set(CMAKE_CXX_STANDARD    20)  # 指定 C++ 版本
+set(CMAKE_CXX_STANDARD    23)  # 指定 C++ 版本
 set(CMAKE_BUILD_TYPE "Release")  # 调试使用Debug，可以查看中间变量；发布使用Release，运行速度快
 
 # 输出 compile_command.json

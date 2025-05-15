@@ -8,9 +8,9 @@ using Paras = std::vector<std::string>;
 struct Item;
 using Func = void (*)(const Item &item, const Paras& paras);
 struct Item {
-    std::string match_name;
+    std::string_view match_name;
     Func callback;
-    std::string windows_name;
+    std::string_view windows_name;
 };
 
 

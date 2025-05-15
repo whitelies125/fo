@@ -10,18 +10,18 @@
 
 #include "register.h"
 
-static void execute_cmd(const std::string& cmd)
+static void execute_cmd(const std::string_view cmd)
 {
     std::cout << cmd << std::endl;
-    system(cmd.c_str());
+    system(cmd.data());
 }
 
-static bool setWindosOnTop(const std::string& windows_name)
+static bool setWindosOnTop(const std::string_view windows_name)
 {
     if (windows_name == "") return false;
     // string 转换为 LPCWSTR
     std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
-    std::wstring wstr = converter.from_bytes(windows_name);
+    std::wstring wstr = converter.from_bytes(windows_name.data());
     LPCWSTR lpcwstr = wstr.c_str();
 
     HWND hWnd = FindWindowW(NULL, lpcwstr);
@@ -32,10 +32,10 @@ static bool setWindosOnTop(const std::string& windows_name)
     return false;
 }
 
-static void set_top_or_open_directory(const std::string str, const std::string windows_name = "")
+static void set_top_or_open_directory(const std::string_view str, const std::string_view windows_name = "")
 {
     if (!setWindosOnTop(windows_name)) {
-        execute_cmd("explorer " + str);
+        execute_cmd("explorer " + std::string(str));
     }
 }
 
