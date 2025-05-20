@@ -76,4 +76,6 @@ BraceWrapping:
 #     return
 # }
 AllowShortIfStatementsOnASingleLine: AllIfsAndElse
+# 短函数合并为一行：仅对空函数适用
+AllowShortFunctionsOnASingleLine: Empty
 ...
